@@ -22,38 +22,38 @@ public class AESOperator {
     /*
      * 加密用的Key 可以用26个字母和数字组成 此处使用AES-128-CBC加密模式，key需要为16位。
      */
-    private String sKey = "vow";//key，可自行修改
+    private String sKey = "anxin_renew";//key，可自行修改
     private String ivParameter = "answernok1234567";//偏移量,可自行修改
     private static AESOperator instance = null;
 
     public static void main(String[] args) throws Exception {
-//        //原始密文文件名
-//        String secretPath = "E:\\a.txt";
-//        //写入文件名
-//        String afterPath = "E:\\b.txt";
-//        List<String> result = new ArrayList<>();
-//        //文件读取
-//        List<String> oriList = readFromTextFile(secretPath);
-//        //解密
-//        for(String tmp : oriList){
-//            result.add(AESOperator.getInstance().decrypt(URLDecoder.decode(tmp, "GBK").replace("_", "-").replace("/", "+")));
-//        }
-//        //写文件
-//        writeToTextFile(result, afterPath);
+        //原始密文文件名
+        String secretPath = "E:\\a.txt";
+        //写入文件名
+        String afterPath = "E:\\b.txt";
+        List<String> result = new ArrayList<>();
+        //文件读取
+        List<String> oriList = readFromTextFile(secretPath);
+        //解密
+        for(String tmp : oriList){
+            result.add(AESOperator.getInstance().decrypt(URLDecoder.decode(tmp, "GBK").replace("_", "/").replace("-", "+")));
+        }
+        //写文件
+        writeToTextFile(result, afterPath);
 
         //原始密文
-        String ori = "aZRLhWEEVyRYpKIZaxamvw%3D%3D";
-        // 1、先进行urldecode
-        String str1 = URLDecoder.decode(ori, "GBK");
-        System.out.println("第一步：" + str1);
-
-        //2、然后进行字符串替换，替换规则：_替换为-号，/替换为+号
-        String str2 = str1.replace("_", "-").replace("/", "+");
-        System.out.println("第二步：" + str2);
-
-        //3、最后解密
-        String str3 = AESOperator.getInstance().decrypt(str2);
-        System.out.println("第三步：" + str3);
+//        String ori = "y_xAeviSNiCtMovBxBTR08tL8hzt8ORAlFhu2dhfQrM_CLK54COamfm24xcMg02Gpxj4_hfEbYlUliKNN6dIncHPIhw25KgXJhYfisX8UwJMUYg1qxRpiMBfdC1svZIcNJjho_TCVUunG-oFSCD-5A%3D%3D";
+//        // 1、先进行urldecode
+//        String str1 = URLDecoder.decode(ori, "GBK");
+//        System.out.println("第一步：" + str1);
+//
+//        //2、然后进行字符串替换，替换规则：_替换为-号，/替换为+号
+//        String str2 = str1.replace("_", "/").replace("-", "+");
+//        System.out.println("第二步：" + str2);
+//
+//        //3、最后解密
+//        String str3 = AESOperator.getInstance().decrypt(str2);
+//        System.out.println("第三步：" + str3);
 
 //        // 需要加密的字串
 //        String ori2 = "123456";
