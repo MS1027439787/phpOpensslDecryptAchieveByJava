@@ -5,9 +5,13 @@ import javax.crypto.spec.SecretKeySpec;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -23,6 +27,20 @@ public class AESOperator {
     private static AESOperator instance = null;
 
     public static void main(String[] args) throws Exception {
+//        //原始密文文件名
+//        String secretPath = "E:\\a.txt";
+//        //写入文件名
+//        String afterPath = "E:\\b.txt";
+//        List<String> result = new ArrayList<>();
+//        //文件读取
+//        List<String> oriList = readFromTextFile(secretPath);
+//        //解密
+//        for(String tmp : oriList){
+//            result.add(AESOperator.getInstance().decrypt(URLDecoder.decode(tmp, "GBK").replace("_", "-").replace("/", "+")));
+//        }
+//        //写文件
+//        writeToTextFile(result, afterPath);
+
         //原始密文
         String ori = "aZRLhWEEVyRYpKIZaxamvw%3D%3D";
         // 1、先进行urldecode
@@ -150,5 +168,48 @@ public class AESOperator {
     }
 
 
+    /**
+     * 按行读取文件
+     */
+    public static List<String> readFromTextFile(String pathname) throws IOException {
+        List<String> strArray = new ArrayList<String>();
+        File filename = new File(pathname);
+        InputStreamReader reader = new InputStreamReader(new FileInputStream(filename));
+        BufferedReader br = new BufferedReader(reader);
+        String line = "";
+        line = br.readLine();
+        while(line != null) {
+            strArray.add(line);
+            line = br.readLine();
+        }
+        return strArray;
+    }
 
+    public static void writeToTextFile(List<String> list, String path){
+        //需要写入的文件名称
+        String linuxDataPath = path;
+        try{
+            File file = new File(linuxDataPath);
+            FileOutputStream fos = null;
+            if(!file.exists()){
+                file.createNewFile();//如果文件不存在，就创建该文件
+                fos = new FileOutputStream(file);//首次写入获取
+            }else{
+                //如果文件已存在，那么就在文件末尾追加写入
+                fos = new FileOutputStream(file,true);//这里构造方法多了一个参数true,表示在文件末尾追加写入
+            }
+
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");//指定以UTF-8格式写入文件
+
+            for(String str : list){
+                //LoggerUtil.info("Json字符串：" + str);
+                osw.write(str);
+                osw.write("\r\n");
+            }
+            //写入完成关闭流
+            osw.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
